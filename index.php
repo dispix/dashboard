@@ -70,7 +70,17 @@ if (isset($_GET['page']))
 
 		if (isset($handlers_user[$_GET['page']]) && !empty($_POST))
 		{
-			require('controllers/handlers/handler_'.$handlers_user[$_GET['page']].'.php');
+			if (is_array($handlers_user[$_GET['page']]))
+			{
+				for ($i=0, $c = count($handlers_user[$_GET['page']]); $i < $c; $i++)
+				{
+					require('controllers/handlers/handler_'.$handlers_user[$_GET['page']][$i].'.php');
+				}
+			}
+			else
+			{
+				require('controllers/handlers/handler_'.$handlers_user[$_GET['page']].'.php');
+			}
 		}
 	}
 	else if (in_array($_GET['page'], $access_admin) && isset($_SESSION['id']) && $currentUser -> getStatus() == 2)
@@ -79,7 +89,17 @@ if (isset($_GET['page']))
 
 		if (isset($handlers_admin[$_GET['page']]) && !empty($_POST))
 		{
-			require('controllers/handlers/handler_'.$handlers_admin[$_GET['page']].'.php');
+			if (is_array($handlers_admin[$_GET['page']]))
+			{
+				for ($i=0, $c = count($handlers_admin[$_GET['page']]); $i < $c; $i++)
+				{
+					require('controllers/handlers/handler_'.$handlers_admin[$_GET['page']][$i].'.php');
+				}
+			}
+			else
+			{
+				require('controllers/handlers/handler_'.$handlers_admin[$_GET['page']].'.php');
+			}
 		}
 	}
 	else
