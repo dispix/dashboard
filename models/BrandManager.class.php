@@ -12,6 +12,11 @@ class BrandManager
     }
 
 
+    /**
+     * @param $id
+     * @return object
+     * @throws Exception
+     */
     public function findByid($id)
     {
         $id     = intval($id);
@@ -36,7 +41,84 @@ class BrandManager
         }
     }
 
+    public function findByName($name)
+    {
+        if(is_string($name))
+        {
+            $name       = $this->db->quote($name);
+            $query      = "SELECT * FROM brand WHERE name =".$name;
+            $data       = $this->db->query($query);
 
+            if($data)
+            {
+                $brand  = $data->fetchObject('Brand', array($this->db));*
+                if($brand)
+                {
+                    return $brand;
+                }
+                else
+                {
+                    throw new Exception('Fetch Object error');
+                }
+            }
+            else
+            {
+                throw new Exception('Find by name error');
+            }
+        }
+        else
+        {
+            throw new Exception('Invalid name format');
+        }
+    }
+
+
+    /**
+     * @param $word
+     * @return array with object
+     * @throws Exception
+     */
+    public function findByWordIntoDescription($word)
+    {
+        if(is_string($name))
+        {
+            $word       = $this->db->quote('%'.$word.'%');
+            $query      = "SELECT * FROM brand WHERE description LIKE ".$word;
+            $data       = $this->db->query($query);
+
+            if($data)
+            {
+                $brand  = $data->fetchAll(PDO::FETCH_CLASS, 'Brand', array($this->db));
+
+                if($brand)
+                {
+                    return $brand;
+                }
+                else
+                {
+                    throw new Exception('Fetch object error');
+                }
+            }
+            else
+            {
+                throw new Exception('Find by word error');
+            }
+
+        }
+        else
+        {
+            throw new Exception('Invalid word format');
+        }
+    }
+
+
+    /**
+     * @param $name
+     * @param $description
+     * @param array $errors
+     * @return object
+     * @throws Exception
+     */
     public function create($name, $description, $errors = array())
     {
 
