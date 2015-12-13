@@ -34,7 +34,7 @@ class Category
     {
         if(strlen(trim($name)) >=1 && strlen(trim($name)) <=  31)
         {
-            $this->name = $name;
+            $this->name = trim($name);
         }
         else
         {
@@ -45,7 +45,7 @@ class Category
     {
         if(strlen(trim($description)) <= 1022)
         {
-            $this->description = $description;
+            $this->description = trim($description);
         }
         else
         {
