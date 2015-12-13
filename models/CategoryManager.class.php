@@ -20,12 +20,12 @@ class BrandManager
     public function findByid($id)
     {
         $id     = intval($id);
-        $query  = "SELECT * FROM brand WHERE id = ".$id;
+        $query  = "SELECT * FROM category WHERE id = ".$id;
         $data   = $this->db->query($query);
 
         if($data)
         {
-            $brand = $data->fetchObject('Brand', array($this->db));
+            $brand = $data->fetchObject('Category', array($this->db));
             if($brand)
             {
                 return $brand;
@@ -46,12 +46,12 @@ class BrandManager
         if(is_string($name))
         {
             $name       = $this->db->quote($name);
-            $query      = "SELECT * FROM brand WHERE name =".$name;
+            $query      = "SELECT * FROM category WHERE name =".$name;
             $data       = $this->db->query($query);
 
             if($data)
             {
-                $brand  = $data->fetchObject('Brand', array($this->db));
+                $brand  = $data->fetchObject('Cateogry', array($this->db));
                 if($brand)
                 {
                     return $brand;
@@ -86,17 +86,17 @@ class BrandManager
             $word       = $this->db->quote('%'.$word.'%');
             if($limit == 0)
             {
-                $query      = "SELECT * FROM brand WHERE description LIKE ".$word;
+                $query      = "SELECT * FROM category WHERE description LIKE ".$word;
             }
             else
             {
-                $query      = "SELECT * FROM brand WHERE description LIKE ".$word. "LIMIT ".$limit;
+                $query      = "SELECT * FROM category WHERE description LIKE ".$word. "LIMIT ".$limit;
             }
             $data       = $this->db->query($query);
 
             if($data)
             {
-                $brand  = $data->fetchAll(PDO::FETCH_CLASS, 'Brand', array($this->db));
+                $brand  = $data->fetchAll(PDO::FETCH_CLASS, 'Category', array($this->db));
 
                 if($brand)
                 {
@@ -153,7 +153,7 @@ class BrandManager
         {
             $name           = $this->db->quote($brand->getName());
             $description    = $this->db->quote($brand->getDescription());
-            $query          = "INSERT INTO brand (name, description) VALUES(".$name.", ".$description.")";
+            $query          = "INSERT INTO category (name, description) VALUES(".$name.", ".$description.")";
             $data           = $this->db->exec($query);
 
             if($data)
@@ -194,7 +194,7 @@ class BrandManager
         $id             = $brand->getId();
         $name           = $this->db->quote($brand->getName());
         $description    = $this->db->quote($brand->getDescription());
-        $query          = "UPDATE brand SET name = ".$name.", description = ".$description."WHERE id = ".$id;
+        $query          = "UPDATE category SET name = ".$name.", description = ".$description."WHERE id = ".$id;
         $data           = $this->db->exec($query);
 
         if($data)
@@ -226,7 +226,7 @@ class BrandManager
 
     public function delete(Brand $brand)
     {
-        $query  = "DELETE FROM brand WHERE id = ".$brand->getId();
+        $query  = "DELETE FROM category WHERE id = ".$brand->getId();
         $data   = $this->db->exec($query);
 
         if($data)
