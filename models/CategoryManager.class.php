@@ -1,6 +1,6 @@
 <?php
 
-class BrandManager
+class CategoryManager
 {
 
     private $db;
@@ -25,10 +25,10 @@ class BrandManager
 
         if($data)
         {
-            $brand = $data->fetchObject('Category', array($this->db));
-            if($brand)
+            $category = $data->fetchObject('Category', array($this->db));
+            if($category)
             {
-                return $brand;
+                return $category;
             }
             else
             {
@@ -51,10 +51,10 @@ class BrandManager
 
             if($data)
             {
-                $brand  = $data->fetchObject('Cateogry', array($this->db));
-                if($brand)
+                $category  = $data->fetchObject('Cateogry', array($this->db));
+                if($category)
                 {
-                    return $brand;
+                    return $category;
                 }
                 else
                 {
@@ -96,11 +96,11 @@ class BrandManager
 
             if($data)
             {
-                $brand  = $data->fetchAll(PDO::FETCH_CLASS, 'Category', array($this->db));
+                $category  = $data->fetchAll(PDO::FETCH_CLASS, 'Category', array($this->db));
 
-                if($brand)
+                if($category)
                 {
-                    return $brand;
+                    return $category;
                 }
                 else
                 {
@@ -130,11 +130,11 @@ class BrandManager
     public function create($name, $description, $errors = array())
     {
 
-        $brand = new Brand($this->db);
+        $category = new Brand($this->db);
 
         try
         {
-            $brand->setName($name);
+            $category->setName($name);
         }
         catch(Exception $e)
         {
@@ -142,7 +142,7 @@ class BrandManager
         }
         try
         {
-            $brand->setDescription($description);
+            $category->setDescription($description);
         }
         catch(Exception $e)
         {
@@ -151,8 +151,8 @@ class BrandManager
 
         if(count($errors) == 0)
         {
-            $name           = $this->db->quote($brand->getName());
-            $description    = $this->db->quote($brand->getDescription());
+            $name           = $this->db->quote($category->getName());
+            $description    = $this->db->quote($category->getDescription());
             $query          = "INSERT INTO category (name, description) VALUES(".$name.", ".$description.")";
             $data           = $this->db->exec($query);
 
@@ -164,8 +164,8 @@ class BrandManager
                 {
                     try
                     {
-                        $brand = $this->findById($id);
-                        return $brand;
+                        $category = $this->findById($id);
+                        return $category;
                     }
                     catch(Exception $e)
                     {
@@ -189,11 +189,11 @@ class BrandManager
         }
     }
 
-    public function update(Brand $brand, $errors = array())
+    public function update(Category $category, $errors = array())
     {
-        $id             = $brand->getId();
-        $name           = $this->db->quote($brand->getName());
-        $description    = $this->db->quote($brand->getDescription());
+        $id             = $category->getId();
+        $name           = $this->db->quote($category->getName());
+        $description    = $this->db->quote($category->getDescription());
         $query          = "UPDATE category SET name = ".$name.", description = ".$description."WHERE id = ".$id;
         $data           = $this->db->exec($query);
 
@@ -204,8 +204,8 @@ class BrandManager
             {
                 try
                 {
-                    $brand = $this->findByid($id);
-                    return $brand;
+                    $category = $this->findByid($id);
+                    return $category;
                 }
                 catch(Exception $e)
                 {
@@ -224,9 +224,9 @@ class BrandManager
         }
     }
 
-    public function delete(Brand $brand)
+    public function delete(Cateogry $category)
     {
-        $query  = "DELETE FROM category WHERE id = ".$brand->getId();
+        $query  = "DELETE FROM category WHERE id = ".$category->getId();
         $data   = $this->db->exec($query);
 
         if($data)
